@@ -1,18 +1,34 @@
 import React from "react";
 import axios from "axios";
 import { Container, Form, Button, Row, Col } from "react-bootstrap";
-import './login.css'
+import './login.css';
+import {isNull} from 'util';
+//import Cookies from "universal-cookie";
+import app from "../../app.json";
 
-export default class login extends React.Component {
+const {APIHOST} = app;
+export default class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        usuario : '',
-        pass : '',
+        usuario : "",
+        pass : "",
     };
   }
-  iniciarSesion (){
-    axios.post();
+  iniciarSesion () {
+    axios.post(`${APIHOST}/usuarios/login`, {
+      usuario: this.state.usuario,
+      pass: this.state.pass,
+    })
+    .then((response) => {
+      if (isNull(response.data.token)) {
+        alert('Usuario y/o contraseña invalidas');
+      } else {
+      }
+    })
+    .catch((err) =>{
+      console.log(err);
+    })
   }
 
   render() {
@@ -50,8 +66,7 @@ export default class login extends React.Component {
                     />                    
                   </Form.Group>
                   <Button
-                    variant="primary"
-                    type = "submit"                    
+                    variant="primary"             
                     onClick = {() => {
                         this.iniciarSesion();
                     }}

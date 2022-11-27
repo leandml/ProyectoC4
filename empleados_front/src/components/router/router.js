@@ -1,25 +1,24 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Login from "../login/login";
-import Inicio from "../index/index"
+import Inicio from "../index/index";
 
 export default function AppRoutes() {
   return (
     <Router>
-      <Routes>
-        <Route exact path="/login" element={<Login />} />
-        <Route exact path="/" element={<Inicio />} />
+      <Switch>
+        <Route exact path={["/login"]} component={Login} />
+        <Route exact path={["/"]} component={Inicio} />
+        <Route exact path="/index" component={Inicio} />
         <Route
-          exact
-          path="/*"
-          element={
+          path={"*"}
+          component={() => (
             <h1 style={{ marginTop: 300 }}>
-              {" "}
-              404 <br /> Pagina no encontrada
+              404 <br /> Pagina no encontrada{" "}
             </h1>
-          }
+          )}
         />
-      </Routes>
+      </Switch>
     </Router>
   );
 }
